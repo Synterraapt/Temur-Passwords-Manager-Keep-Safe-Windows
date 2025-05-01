@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<uraniumUI:UraniumContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                              xmlns:uraniumUI="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
+                              xmlns:uraniumUIMaterial="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+                              xmlns:validation="clr-namespace:UraniumUI.Validations;assembly=UraniumUI.Validations.DataAnnotations"
+                              xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
+                              xmlns:viewModel="clr-namespace:PasswordManager.API.ViewModels;assembly=PasswordManager.API"
+                              xmlns:fa="clr-namespace:UraniumUI.Icons.FontAwesome;assembly=UraniumUI.Icons.FontAwesome"
+                              xmlns:icons="clr-namespace:UraniumUI.Icons.MaterialSymbols;assembly=UraniumUI.Icons.MaterialSymbols"
+                              x:DataType="viewModel:PasswordViewModel"
+                              x:Class="PasswordManager.Client.MainPage">
+    
+    <uraniumUI:UraniumContentPage.Attachments>
+        <uraniumUIMaterial:BottomSheetView BackgroundColor="WhiteSmoke">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <VerticalStackLayout Grid.Row="0">
+
+                    <uraniumUIMaterial:TextField Title="Enter Site" Text="{Binding NewPassword.SiteName, Mode=OneWayToSource}"/>
+
+                    <uraniumUIMaterial:TextField Title="Generated Password" Text="{Binding GenPass, Mode=TwoWay}"/>
+
+                </VerticalStackLayout>
+
+                <Grid Grid.Row="1" Margin="0, 0, 0, 10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.Column="0" 
+                            Text="Add Password" 
+                            Margin="0, 5, 5, 0"
+                            Command="{Binding AddPasswordCommand}"/>
+
+                    <Button Grid.Column="1" 
+                            Text="Generate Password"  
+                            Margin="5, 5, 0, 0"
+                            Command="{Binding GeneratePasswordCommand}"/>
+
+                </Grid>
+            </Grid>
+        </uraniumUIMaterial:BottomSheetView>
+        
+        <uraniumUIMaterial:BackdropView BackgroundColor="Transparent">
+            <uraniumUIMaterial:BackdropView.IconImageSource>
+                <FontImageSource FontFamily="MaterialRounded" 
+                                 Glyph="{x:Static icons:MaterialSharp.Search_check}" 
+                                 Color="DarkSlateBlue"/>
+            </uraniumUIMaterial:BackdropView.IconImageSource>
+            
+            <Grid Grid.Column="1" Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <VerticalStackLayout Grid.Row="1">
+
+                    <uraniumUIMaterial:TextField Title="Type site name to search for password"
+                                                 Text="{Binding NewPassword.SiteName, Mode=OneWayToSource}"/>
+
+                </VerticalStackLayout>
+
+                <Grid Grid.Row="2" Margin="0, 0, 0, 10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.ColumnSpan="4" 
+                            Margin="0, 5, 0, 0"
+                            Text="Search Password"
+                            Command="{Binding FoundPasswordCommand}"/>
+
+                </Grid>
+            </Grid>
+
+        </uraniumUIMaterial:BackdropView>
+    </uraniumUI:UraniumContentPage.Attachments>
+    
+    <ScrollView>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="15*"/>
+                <RowDefinition Height="5*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="20*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="1" Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                
+                <ScrollView Grid.Row="0">
+                    <uraniumUIMaterial:DataGrid x:Name="Empty"
+                                                ItemsSource="{Binding Passwords}"
+                                                BackgroundColor="Transparent"
+                                                VerticalOptions="Fill"
+                                                HorizontalOptions="Fill">
+                        
+                        <uraniumUIMaterial:DataGrid.Columns>
+
+                            <uraniumUIMaterial:DataGridColumn ValueBinding="{Binding SiteName}" 
+                                                              Width="*">
+                                
+                                <uraniumUIMaterial:DataGridColumn.TitleView>
+                                    <Label Text="Site Name"
+                                           FontSize="Title" 
+                                           TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                                           HorizontalTextAlignment="Center"
+                                           VerticalTextAlignment="Center" />
+                                    
+                                </uraniumUIMaterial:DataGridColumn.TitleView>
+                                
+                            </uraniumUIMaterial:DataGridColumn>
+
+                        </uraniumUIMaterial:DataGrid.Columns>
+
+                    </uraniumUIMaterial:DataGrid>
+                </ScrollView>
+            </Grid>
+            
+        </Grid>
+    </ScrollView>
+</uraniumUI:UraniumContentPage>
